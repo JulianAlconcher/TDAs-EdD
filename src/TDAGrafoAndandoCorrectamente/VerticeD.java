@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 import TDALista.*;
 import TDAMapeo.MapeoConHashAbierto2022;

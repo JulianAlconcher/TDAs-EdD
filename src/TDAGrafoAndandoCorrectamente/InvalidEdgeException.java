@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 public class InvalidEdgeException extends Exception {
 	

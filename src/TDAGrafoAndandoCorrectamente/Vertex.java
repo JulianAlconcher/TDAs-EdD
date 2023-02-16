@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 public interface Vertex<V> extends DecorablePosition<V>{
 	

@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 import TDALista.Position;
 import TDAMapeo.Map;

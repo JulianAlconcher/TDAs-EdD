@@ -1,15 +1,15 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 /**
  * Interface Graph - Estructura de Datos (DCIC-UNS).
- * Define los datos y operaciones aplicables sobre un grafo dirigido simple.
+ * Define los datos y operaciones aplicables sobre un grafo no dirigido simple.
  * @author Estructuras de Datos, DCIC-UNS.
  * @version 1.0 - María Lujan Ganuza (2013-2018)
  * @version 2.0 - Federico Joaquín (2019-2020) 
  * @param <V> Tipo de dato de los rótulos de los vértices.
  * @param <E> Tipo de dato de los rótulos de los arcos.
  */
-public interface GraphD<V,E> {
+public interface Graph<V,E> {
 	
 	/**
 	 * Devuelve una colección iterable de vértices.
@@ -30,14 +30,6 @@ public interface GraphD<V,E> {
 	 * @throws InvalidVertexException si el vértice es inválido.
 	 */
 	public Iterable<Edge<E>> incidentEdges(Vertex<V> v) throws InvalidVertexException;
-	
-	/**
-	 * Devuelve una colección iterable de arcos adyacentes a un vértice v.
-	 * @param v Un vértice
-	 * @return Una colección iterable de arcos adyacentes a un vértice v.
-	 * @throws InvalidVertexException si el vértice es inválido.
-	 */
-	public Iterable<Edge<E>> succesorEdges(Vertex<V> v) throws InvalidVertexException;
 	
 	/**
 	 * Devuelve el vértice opuesto a un Arco E y un vértice V.
@@ -83,11 +75,11 @@ public interface GraphD<V,E> {
 	public Vertex<V> insertVertex(V x);
 	
 	/**
-	 * Inserta un nuevo arco con rótulo e, desde un vértice v a un vértice w.
+	 * Inserta un nuevo arco con rótulo e, con vértices extremos v y w.
 	 * @param v Un vértice
 	 * @param w Un vértice
 	 * @param e rótulo del nuevo arco.
-	 * @return Un nuevo arco insertado desde un vértice V a un vértice W.
+	 * @return Un nuevo arco.
 	 * @throws InvalidVertexException si uno de los vértices es inválido.
 	 */
 	public Edge<E> insertEdge(Vertex<V> v, Vertex<V> w, E e) throws InvalidVertexException;

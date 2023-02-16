@@ -1,7 +1,7 @@
 package EjerciciosVarios;
 
 import Exceptions.InvalidKeyException;
-import TDAGrafoLalo.*;
+import TDAGrafoAndandoCorrectamente.*;
 import TDALista.ListaDoblementeEnlazada2022;
 import TDALista.PositionList;
 import TDAMapeo.Map;

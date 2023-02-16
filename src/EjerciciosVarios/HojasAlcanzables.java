@@ -2,9 +2,9 @@ package EjerciciosVarios;
 
 import TDADiccionario.DiccionarioConHashAbierto2022;
 import TDADiccionario.Dictionary;
-import TDAGrafoLalo.*;
-import TDAGrafoLalo.InvalidEdgeException;
-import TDAGrafoLalo.InvalidVertexException;
+import TDAGrafoAndandoCorrectamente.*;
+import TDAGrafoAndandoCorrectamente.InvalidEdgeException;
+import TDAGrafoAndandoCorrectamente.InvalidVertexException;
 import Exceptions.*;
 
 

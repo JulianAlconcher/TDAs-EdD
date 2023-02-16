@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 import Exceptions.EmptyListException;
 import Exceptions.InvalidPositionException;

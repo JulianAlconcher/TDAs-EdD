@@ -1,4 +1,4 @@
-package TDAGrafoLalo;
+package TDAGrafoAndandoCorrectamente;
 
 //Libreri­as JUNIT
 import static org.junit.Assert.*;
