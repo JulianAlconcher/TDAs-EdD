@@ -2,6 +2,7 @@ package TDAMapeo;
 
 import Exceptions.InvalidKeyException;
 import Exceptions.InvalidPositionException;
+import TDAArbol.Tree;
 import TDALista.ListaDoblementeEnlazada2022;
 import TDALista.Position;
 import TDALista.PositionList;
@@ -181,5 +182,23 @@ public class MapeoConHashAbierto2022<K,V> implements Map<K,V> {
 		  }
 		  // Si no se pudo dividir por ninguno de los de arriba, sí es primo
 		  return true;
-	}	
+	}
+	
+    /*
+     * Agregue un metodo a la tabla de hash que reciba un arbol T y que por cada clake K determine 
+     * si la misma esta en el arbol y si esta, borre la entrada que la contiene de la tabla hash
+     */
+    
+    public void metodo(Tree<Entry<K,V>> t) {
+
+        for(TDAArbol.Position<Entry<K, V>> e :t.positions()) {
+            for(Entry<K,V> e1 : entries()) {
+                if(e.element().getKey().equals(e1.getKey())) {
+                    try {
+                        remove(e1.getKey());
+                    } catch (InvalidKeyException e2) {e2.printStackTrace();}
+                }
+            }
+        }
+    }
 }

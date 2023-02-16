@@ -6,6 +6,7 @@ import Exceptions.BoundaryViolationException;
 import Exceptions.EmptyTreeException;
 import Exceptions.InvalidOperationException;
 import Exceptions.InvalidPositionException;
+import TDAArbolBinariodeBusqueda.NodoABB;
 import TDALista.ListaDobleEnlazada;
 import TDALista.ListaDoblementeEnlazada2022;
 import TDALista.PositionList;
@@ -427,5 +428,31 @@ public class ArbolBinario2022<E> implements BinaryTree<E> {
 		
 		return retornoR;
 	}
+	
+//    /** Usando el lenguaje de programacion Java y con total acceso a la estructura de datos agregue
+//    * un metodo a la clase arbol binario de busqueda definido en (a) que resuelva  lo siguiente:
+//    * 
+//    * Recibir un rot R y retornar una lista L. 
+//    * Buscar el nodo P que contiene R como rotulo. 
+//    * 
+//    * -->> ¿?¿? Poblar a L con el listado preorden del subarbol con raiz P pero incluyendo solamente nodos internos. 
+//    */    
+//	
+//   private void preOrden(PositionList<NodoABB<E>> L,NodoABB<E> n){
+//       if(n.getLeft() != null) {
+//           L.addLast(n);
+//           preOrden(L,n.getLeft());
+//       }
+//       if(n.getRight() != null)
+//           preOrden(L,n.getRight());
+//       
+//   }
+//   public PositionList<NodoABB<E>> metodo(E r){
+//       NodoABB<E> p = buscar(r);
+//       PositionList<NodoABB<E>> lista = new ListaDoblementeEnlazada2022<NodoABB<E>>();
+//       lista.addLast(p);
+//       preOrden(lista,p);
+//       return lista;
+//   }
 	
 }

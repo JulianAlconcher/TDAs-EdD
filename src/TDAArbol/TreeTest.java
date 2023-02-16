@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import TDACola.*;
 import TDALista.*;
 import Exceptions.*;
@@ -385,7 +386,7 @@ public class TreeTest {
 		// chequearHijosNiveles();
 		Position<Integer> p;
 		int i = 1;
-		Queue<Position<Integer>> cola = new ColaConArregloCircular<Position<Integer>>();
+		Queue<Position<Integer>> cola = new ColaEnlazada<Position<Integer>>();
 		try {
 			p = T.root();
 		} catch (EmptyTreeException e1) {
@@ -437,7 +438,7 @@ public class TreeTest {
 		cargarArbol(T);
 		Position<Integer> p;
 		Iterator<Position<Integer>> hijos = null;
-		Queue<Position<Integer>> cola = new ColaConArregloCircular<Position<Integer>>();
+		Queue<Position<Integer>> cola = new ColaEnlazada<Position<Integer>>();
 		// Posici�n inv�lida
 		try {
 			T.isExternal(null);
@@ -500,7 +501,7 @@ public class TreeTest {
 		cargarArbol(T);
 		Position<Integer> p = null;
 		Iterator<Position<Integer>> hijos = null;
-		Queue<Position<Integer>> cola = new ColaConArregloCircular<Position<Integer>>();
+		Queue<Position<Integer>> cola = new ColaEnlazada<Position<Integer>>();
 		try {
 			T.isRoot(null);
 			fail("isRoot deber�a lanzar la excepci�n InvalidPositionException con una posici�n inv�lida");
@@ -1152,7 +1153,7 @@ public class TreeTest {
 			lista = new ListaDoblementeEnlazada2022<Integer>();
 			for (i = 1; i <= 4; i++)
 				lista.addLast(i);
-			p1 = lista.last();
+			p1 =  lista.last();
 			lista.addLast(9);
 			lista.addLast(10);
 			p = lista.last();
@@ -1163,7 +1164,7 @@ public class TreeTest {
 			lista.addLast(11);
 			chequearHijosNiveles2(lista);
 			// elimino el nodo 12
-			lista.set(p, 12);
+			lista.set((TDALista.Position<Integer>) p, 12);
 			lista.remove(lista.prev(lista.last()));
 			it = T.positions().iterator();
 			pos = it.next();
@@ -1173,8 +1174,8 @@ public class TreeTest {
 			chequearPadre(T.root());
 			chequearHijosNiveles2(lista);
 			// elimino el nodo 4
-			lista.set(p1, 8);
-			lista.set(p2, 11);
+			lista.set((TDALista.Position<Integer>) p1, 8);
+			lista.set((TDALista.Position<Integer>) p2, 11);
 			lista.remove(lista.last());
 			it = T.positions().iterator();
 			pos = it.next();
@@ -1448,7 +1449,7 @@ public class TreeTest {
 		Position<Integer> p;
 		int el = 0;
 		Iterator<Integer> it = lista.iterator();
-		Queue<Position<Integer>> cola = new ColaConArregloCircular<Position<Integer>>();
+		Queue<Position<Integer>> cola = new ColaEnlazada<Position<Integer>>();
 		Iterator<Position<Integer>> hijos = null;
 		try {
 			p = T.root();

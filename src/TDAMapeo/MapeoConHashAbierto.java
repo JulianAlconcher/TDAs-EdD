@@ -123,7 +123,7 @@ public class MapeoConHashAbierto<K,V> implements Map<K,V> {
 	 */
 	public V remove(K key) throws InvalidKeyException {
 		if(key == null)
-			throw new InvalidKeyException("Clave Invalida");
+			throw new InvalidKeyException("Remove:: Clave Invalida");
 		V valor = arreglo[hash(key)].remove(key);
 		if(valor!=null)
 			cantEntradas--;

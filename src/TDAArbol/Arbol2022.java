@@ -42,7 +42,7 @@ public class Arbol2022<E> implements Tree<E>{
 	@Override
 	public Iterable<Position<E>> positions() {
 		PositionList<Position<E>> l = new ListaDoblementeEnlazada2022<Position<E>>();
-		// Si el arbol no esta vacio, hago un recorrido preorden desde la raï¿½z:
+		// Si el árbol no está vacío, hago un recorrido preorden desde la raíz:
 		if(size>0) 
 			recPreorden(root, l);
 		return l;
@@ -297,49 +297,16 @@ public class Arbol2022<E> implements Tree<E>{
 		size--;
 			
 	}
-	/**
-	 * Remove explicado por ana.
-	 */
 	@Override
 	public void removeNode(Position<E> p) throws InvalidPositionException {
-		if(size==0)
-			throw new InvalidPositionException("arbol vacio: no se puede eliminar");
-		TNodo<E> n = checkPosition(p);
-		try {
-		if(n==root) {
-			if(root.getHijos().size()==1) {
-				TDALista.Position<TNodo<E>> raizNueva = root.getHijos().first();
-				raizNueva.element().setPadre(null);
-				root = raizNueva.element();
-				size--;
-			}
-			else if(size==1) {
-				root=null;
-				size--;
-			}
-			else
-				throw new InvalidPositionException("No se puede eliminar la raiz si tiene mas de un hijo");
-		}
-		else {
-			TNodo<E> padre = n.getPadre();
-			PositionList<TNodo<E>> listaHijosN = n.getHijos();
-			PositionList<TNodo<E>> listaHijosPadre = padre.getHijos();
-			TDALista.Position<TNodo<E>> primero = listaHijosPadre.first();
-			
-			while(primero.element() != n)
-				primero = listaHijosPadre.next(primero);
-			
-			while(!listaHijosN.isEmpty()) {
-				TDALista.Position<TNodo<E>> hijoAInsertar = listaHijosN.first();
-				listaHijosPadre.addBefore(primero, hijoAInsertar.element());
-				hijoAInsertar.element().setPadre(padre);
-				listaHijosN.remove(hijoAInsertar);
-			}
-			listaHijosPadre.remove(primero);
-			size--;
-			
-		}
-		}catch(InvalidPositionException | EmptyListException | BoundaryViolationException e) {e.getMessage();}
+		if(isRoot(p))
+			removeRoot(p);
+		else 
+			if(isInternal(p))
+				removeInternalNode(p);
+		else 
+			if(isExternal(p))
+				removeExternalNode(p);
 	}
 	
 	protected void removeRoot(Position<E> p) throws InvalidPositionException{
@@ -368,8 +335,6 @@ public class Arbol2022<E> implements Tree<E>{
 	}
 	
 	
-	
-	
 	private TNodo<E> checkPosition(Position<E> p) throws InvalidPositionException{
 		try{
 			if(p == null){
@@ -384,6 +349,30 @@ public class Arbol2022<E> implements Tree<E>{
 		}
 	}
 
+	public String toStringARBOL(Position<E> p) {
+		TNodo<E> nodo;
+		try {
+			nodo = checkPosition(p);
+			return (String) nodo.element();
+		} catch (InvalidPositionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String stringDePos(Position<E> p) {
+		TNodo<E> n;
+		try {
+			n = checkPosition(p);
+			return n.element().toString();
+
+		} catch (InvalidPositionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 }
