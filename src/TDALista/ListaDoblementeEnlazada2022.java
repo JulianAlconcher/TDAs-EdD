@@ -230,4 +230,13 @@ public class ListaDoblementeEnlazada2022<E> implements PositionList<E> {
 			}
 			tamanio = tamanio + l.size();
 	}
+	
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException {
+		while(!l.isEmpty()) {
+			l.remove(l.last());
+		}
+		for(Position<E> p : positions()) {
+			l.addLast(p.element());
+		}
+	}
 }

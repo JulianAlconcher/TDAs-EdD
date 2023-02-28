@@ -269,4 +269,9 @@ public class ListaSimpleEnlazada<E> implements PositionList<E>
 		
 		
 	}
+	@Override
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException {
+		// TODO Auto-generated method stub
+		
+	}
 }

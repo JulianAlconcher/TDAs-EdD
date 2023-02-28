@@ -6,6 +6,7 @@ public class ArcoM<V,E> implements Edge<E> {
 	protected VerticeM<V> v1,v2;
 	protected E element;
 	
+	
 	public ArcoM(E rotulo,VerticeM<V> v1,VerticeM<V> v2) {
 		element = rotulo;
 		this.v1 = v1;

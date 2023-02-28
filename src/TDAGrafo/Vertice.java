@@ -45,4 +45,16 @@ public class Vertice<V,E> extends MapeoConHashAbierto<Object,Object> implements 
 		return null;
 	}
 
+	@Override
+	public void setEstado(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getEstado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

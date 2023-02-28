@@ -67,4 +67,16 @@ public class ArcoAd<V, E> extends MapeoConHashAbierto2022<Object,Object>  implem
 	public void setPosSuces(Position<ArcoAd<V, E>> s) {
 		posSuces = s;
 	}
+
+	@Override
+	public void setPeso(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getPeso() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -219,6 +219,11 @@ public class ListaDobleEnlazada<E> implements PositionList<E> {
 	private DNodo<E> checkPosition( Position<E> p ) throws InvalidPositionException {
 		try {return (DNodo<E>) p;} 
 		catch( ClassCastException e )
-		{throw new InvalidPositionException( "Posicion Invalida" );}} 
+		{throw new InvalidPositionException( "Posicion Invalida" );}}
+	@Override
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException {
+		// TODO Auto-generated method stub
+		
+	} 
 
 }

@@ -65,4 +65,16 @@ public class ArcoD<V, E> extends MapeoConHashAbierto2022<Object,Object>  impleme
 	public void setPosEnIncidentes(Position<ArcoD<V,E>> posicionEnIncidentes) {
 		this.posicionEnIncidentes = posicionEnIncidentes;
 	}
+
+	@Override
+	public void setPeso(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getPeso() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

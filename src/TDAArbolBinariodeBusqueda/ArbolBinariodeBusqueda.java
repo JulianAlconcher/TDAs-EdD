@@ -2,6 +2,13 @@ package TDAArbolBinariodeBusqueda;
 
 import java.util.Comparator;
 
+import Exceptions.EmptyPriorityQueueException;
+import Exceptions.InvalidKeyException;
+import TDAColaConPrioridad.ColaCP_con_heap;
+import TDAColaConPrioridad.PriorityQueue;
+import TDALista.ListaDoblementeEnlazada2022;
+import TDALista.PositionList;
+
 public class ArbolBinariodeBusqueda<E extends Comparable<E>> {
 	//Raiz del arbol
 	protected NodoABB <E> root;
@@ -162,13 +169,143 @@ public class ArbolBinariodeBusqueda<E extends Comparable<E>> {
 		if (this.getRaiz().getRotulo() != null) {
 			System.out.println(n.getRotulo() + " hijo de " + n.getParent().getRotulo());
 			if (n.getLeft().getRotulo() != null) {
+				System.out.print("IZQUIERDO ");
 				mostrar(n.getLeft());
 			}
 			if (n.getRight().getRotulo() != null) {
+				System.out.print("DERECHO ");
 				mostrar(n.getRight());
 			}
 		}
 		
 	}
 	
+	/*
+	 * Recibir un rotulo R y retornar una lista L. Buscar el nodo P que contiene R como rotulo. 
+	 * Poblar a L con el listado preorden del subarbol con raiz P pero inclutendo solamente nodos internos.
+	 */
+	public PositionList<NodoABB<E>> retornarLista(E r){
+		PositionList<NodoABB<E>> lista = new ListaDoblementeEnlazada2022<NodoABB<E>>();
+		NodoABB<E> aux = buscar(r);
+		if(aux!=null) {
+			preOrden(aux,lista);
+			return lista;
+		}
+		return null;
+	}
+	private void preOrden(NodoABB<E> r, PositionList<NodoABB<E>> l) {
+		if(r.getLeft()!=null) {
+			if(esHoja(r.getLeft())!=true)
+				l.addLast(r.getLeft());
+			preOrden(r.getLeft(),l);
+		}
+		if(r.getRight()!=null) {
+			if(esHoja(r.getRight())!=true)
+				l.addLast(r.getRight());
+			preOrden(r.getRight(),l);
+		}
+	}
+	
+	/*
+	 * Hacer un metodo que recorra al arbol y elimine todas las hojas del mismo
+	 */
+	public void podarHojas(NodoABB<E> n) {
+		if(esHoja(n))
+			eliminar(n.getRotulo());
+		if(n.getLeft() != null) 
+			podarHojas(n.getLeft());
+		if(n.getRight() != null) 
+			podarHojas(n.getRight());
+	}
+	
+	private boolean esHoja(NodoABB<E> n) {
+		return n.getLeft()==null && n.getRight()==null;
+	}
+	
+	public String toStringInOrder() {
+		return inorder( this.getRaiz() );
+	}
+	private String inorder( NodoABB<E> p ) {
+		if( p.getRotulo() != null ) 
+			return "(" + inorder( p.getLeft()) + p.getRotulo()+ inorder( p.getRight()) + ")";
+		else return "";
+	}
+	
+	/**
+	 * Recorrer un arbol binario de busqueda de forma eficiente e insertar en una lista L todos aquellos nodos del arbol que sean menores q X de forma ascendente. 
+	 */
+	public PositionList<NodoABB<E>> metodo(E x){
+		PositionList<NodoABB<E>> listaAsc = new ListaDoblementeEnlazada2022<NodoABB<E>>();
+		if(root.getRotulo().compareTo(x)>=0) { //raiz es mayor a x 
+			System.out.println("IZQUIERDA BABY");
+			InOrderEnABB(root.getLeft(),x,listaAsc);
+		}
+		else
+			InOrderEnABB(root.getRight(),x,listaAsc);
+		return listaAsc;
+	}
+	
+	private void  InOrderEnABB(NodoABB<E> n, E x , PositionList<NodoABB<E>> l){
+		System.out.println(n.getRotulo());
+	    if(n.getLeft() == null && n.getRight() == null) {
+	         if(n.getRotulo().compareTo(x)>=0){//n es menor x
+	        	System.out.println("METO EN LISTA");
+	            l.addLast(n);
+	           }
+	    }
+	    else{
+	    	NodoABB<E> w = null;
+	    	if(n.getLeft()!=null) {
+	    		w = n.getLeft();
+	        	InOrderEnABB(w,x,l);
+	    	}
+	    	if(n.getRotulo().compareTo(x)>=0){//n es menor x{
+	    		 System.out.println("METO EN LISTA");
+	    		 l.addLast(n);
+	    	}
+	        if(n.getRight()!=null){
+	           w = n.getRight();
+	           InOrderEnABB(w,x,l);
+	        }
+	    }
+	}
+	
+	/**
+	 * Recorrer un arbol binario de busqueda de forma eficiente e insertar en una lista L todos aquellos nodos del arbol que sean menores q X de forma ascendente. 
+	 * USANDO UN HEAP COMO ESTRUCTURA AUX
+	 */
+	
+	public PositionList<NodoABB<E>> metodo2(E x){
+		PositionList<NodoABB<E>> listaAsc = new ListaDoblementeEnlazada2022<NodoABB<E>>();
+		PriorityQueue<E,NodoABB<E>> c = new ColaCP_con_heap<E,NodoABB<E>>();
+		if(root.getRotulo().compareTo(x)>=0) { //raiz es mayor a x 
+			preOrden(root.getLeft(),x,listaAsc,c);
+		}
+		else
+			preOrden(root.getRight(),x,listaAsc,c);
+		
+		while(!c.isEmpty()) {
+			try {
+				listaAsc.addLast(c.removeMin().getValue());
+			} catch (EmptyPriorityQueueException e) {e.printStackTrace();
+			}
+		}
+		return listaAsc;
+	}
+	
+	private void preOrden(NodoABB<E> n, E x , PositionList<NodoABB<E>> l, PriorityQueue<E,NodoABB<E>> heap) {
+		if(n.getRotulo().compareTo(x)>=0)
+			try {
+				heap.insert(n.getRotulo(), n);
+			} catch (InvalidKeyException e) {e.printStackTrace();
+			}
+	
+		if(n.getLeft()!=null)
+			preOrden(n.getLeft(),x,l,heap);
+		if(n.getRight()!=null)
+			preOrden(n.getRight(),x,l,heap);
+		
+	}
+	
+
 }

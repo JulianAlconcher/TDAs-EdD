@@ -242,4 +242,10 @@ public class ListaSimplementeEnlazada2022<E> implements PositionList<E> {
 		}
 		return retorno;
 	}
+
+	@Override
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException {
+		// TODO Auto-generated method stub
+		
+	}
 }

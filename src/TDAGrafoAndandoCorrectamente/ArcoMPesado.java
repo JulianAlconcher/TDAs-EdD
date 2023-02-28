@@ -3,16 +3,17 @@ package TDAGrafoAndandoCorrectamente;
 import TDALista.Position;
 import TDAMapeo.MapeoConHashAbierto2022;
 
-public class ArcoM<V,E> extends MapeoConHashAbierto2022<Object,Object>  implements Edge<E>{
+public class ArcoMPesado<V,E> extends MapeoConHashAbierto2022<Object,Object>  implements Edge<E>{
 	private E rotulo;
 	private Position<Edge<E>> posicionEnArcos;
 	private VerticeM<V> v1,v2;
 	private int peso;
 	
-	public ArcoM(E rotulo, VerticeM<V> v1, VerticeM<V> v2){
+	public ArcoMPesado(E rotulo, VerticeM<V> v1, VerticeM<V> v2){
 		this.rotulo = rotulo;
 		this.v1 = v1;
 		this.v2 = v2;
+		peso = 0;
 	}
 	
 	//Setters
@@ -30,14 +31,12 @@ public class ArcoM<V,E> extends MapeoConHashAbierto2022<Object,Object>  implemen
 	public VerticeM<V> getV2() { return v2; }
 	public E element() { return rotulo; }
 
-	@Override
-	public void setPeso(int i) {
-		peso = i;
-		
-	}
-
-	@Override
 	public int getPeso() {
 		return peso;
 	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
 }
+

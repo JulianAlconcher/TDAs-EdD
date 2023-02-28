@@ -204,5 +204,11 @@ public class ListaDeGianSimplementeEnlazada<E> implements PositionList<E>{
 			throw new InvalidPositionException("Posicion invalida");
 		}
 	}
+
+	@Override
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

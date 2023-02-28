@@ -32,5 +32,15 @@ public class VerticeM<V> implements Vertex<V>{
 	public void setIndex(int index) {
 		this.index = index;
 	}
+	@Override
+	public void setEstado(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean getEstado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

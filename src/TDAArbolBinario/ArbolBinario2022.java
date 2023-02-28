@@ -409,6 +409,7 @@ public class ArbolBinario2022<E> implements BinaryTree<E> {
 
 	private boolean RecorrerRec(Position<E> posT){
 		boolean retornoR = true;
+		
 		try {
 			while(retornoR) {
 				if (hasLeft(posT) && !hasRight(posT))

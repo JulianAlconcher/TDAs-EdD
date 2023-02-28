@@ -34,4 +34,14 @@ public class Vertice<V, E> implements Vertex<V>{
 	public void setPosicionEnNodos(TDALista.Position<Vertice<V, E>> position) {
 		positionInNodes = position;
 	}
+	@Override
+	public void setEstado(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean getEstado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

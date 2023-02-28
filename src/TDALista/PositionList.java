@@ -117,4 +117,6 @@ public interface PositionList<E> extends Iterable<E>{
 	 * @return Una coleccion iterable de posiciones.
 	 */
 	public Iterable<Position<E>> positions();	
+	
+	public void clonar(PositionList<E> l) throws InvalidPositionException, EmptyListException ;
 }

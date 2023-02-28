@@ -1,5 +1,7 @@
 package TDAGrafoAndandoCorrectamente;
 
+
+
 import Exceptions.EmptyListException;
 import Exceptions.InvalidPositionException;
 import TDALista.*;
@@ -189,6 +191,92 @@ public class Grafo_matriz_adyacencia<V,E> implements Graph<V,E> {
 		}
 
 		return removed;
+	}
+	
+	public PositionList<Vertex<V>> HallarCaminoMinimo(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino){
+		PositionList<Vertex<V>> caminoActual = new ListaDoblementeEnlazada2022<Vertex<V>>();
+		PositionList<Vertex<V>> caminoMinimo = new ListaDoblementeEnlazada2022<Vertex<V>>();
+		for(Vertex<V> v : g.vertices()) {
+			v.setEstado(false);
+			caminoMinimo.addLast(v);
+		}
+		try {
+			HallarCaminoMinimoRec(g,origen,destino,caminoActual,caminoMinimo);
+		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
+		}
+		return caminoMinimo;
+	}
+	
+	private void HallarCaminoMinimoRec(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino,PositionList<Vertex<V>> cA,PositionList<Vertex<V>> cM) throws InvalidPositionException, EmptyListException {
+		origen.setEstado(true);
+		cA.addLast(origen);
+		if(origen.equals(destino)) {
+			if(cA.size() < cM.size()) {
+				System.out.println("HAGO SWAP");
+				cA.clonar(cM);
+			}
+		}
+		else {
+			try {
+
+				for(Edge<E> a : g.incidentEdges(origen)) {
+					Vertex<V> x = g.opposite(origen, a);
+					if(x.getEstado()==false)
+						HallarCaminoMinimoRec(g,x,destino,cA,cM);
+				}
+			} catch (InvalidVertexException | InvalidEdgeException e) {e.printStackTrace();
+			}
+		}
+		try {
+			cA.remove(cA.last());
+			origen.setEstado(false);
+		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
+		}
+
+	}
+	
+	public PositionList<Vertex<V>> HallarCaminoCostoMinimo(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino){
+		PositionList<Vertex<V>> caminoActual = new ListaDoblementeEnlazada2022<Vertex<V>>();
+		PositionList<Vertex<V>> caminoMinimo = new ListaDoblementeEnlazada2022<Vertex<V>>();
+		int costoActual = 0;
+		int costoMinimo = Integer.MAX_VALUE;
+		for(Vertex<V> v : g.vertices()) {
+			v.setEstado(false);
+			caminoMinimo.addLast(v);
+		}
+		try {
+			HallarCaminoCostoMinimoRec(g,origen,destino,caminoActual,caminoMinimo,costoActual,costoMinimo);
+		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
+		}
+		return caminoMinimo;
+	}
+	
+	private void HallarCaminoCostoMinimoRec(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino,PositionList<Vertex<V>> cA,PositionList<Vertex<V>> cM,int cosA,int cosM) throws InvalidPositionException, EmptyListException {
+		origen.setEstado(true);
+		cA.addLast(origen);
+		if(origen.equals(destino)) {
+			if(cosA < cosM) {
+				cosM = cosA;
+				cA.clonar(cM);
+			}
+		}
+		else {
+			try {
+
+				for(Edge<E> a : g.incidentEdges(origen)) {
+					Vertex<V> x = g.opposite(origen,a);
+					if(x.getEstado()==false) {
+						HallarCaminoCostoMinimoRec(g,x,destino,cA,cM, cosA + a.getPeso(),cosM);}
+				}
+			} catch (InvalidVertexException | InvalidEdgeException e) {e.printStackTrace();
+			}
+		}
+		try {
+			cA.remove(cA.last());
+			origen.setEstado(false);
+		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
+		}
+
 	}
 
 }
