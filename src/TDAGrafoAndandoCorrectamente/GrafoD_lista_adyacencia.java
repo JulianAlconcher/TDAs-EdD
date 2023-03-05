@@ -5,6 +5,8 @@ import java.util.Iterator;
 import TDALista.ListaDoblementeEnlazada2022;
 import TDALista.PositionList;
 import Exceptions.*;
+import TDAGrafoAndandoCorrectamente.InvalidEdgeException;
+import TDAGrafoAndandoCorrectamente.InvalidVertexException;
 
 public class GrafoD_lista_adyacencia<V,E> implements GraphD<V,E> {
 	
@@ -176,5 +178,6 @@ public class GrafoD_lista_adyacencia<V,E> implements GraphD<V,E> {
 		return lista;
 	}
 	
+
 
 }

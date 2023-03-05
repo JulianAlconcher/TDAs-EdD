@@ -3,8 +3,11 @@ package TDAGrafoAndandoCorrectamente;
 
 
 import Exceptions.EmptyListException;
+import Exceptions.InvalidKeyException;
 import Exceptions.InvalidPositionException;
 import TDALista.*;
+import TDAMapeo.Map;
+import TDAMapeo.MapeoConHashAbierto2022;
 
 public class Grafo_matriz_adyacencia<V,E> implements Graph<V,E> {
 	
@@ -235,48 +238,47 @@ public class Grafo_matriz_adyacencia<V,E> implements Graph<V,E> {
 
 	}
 	
-	public PositionList<Vertex<V>> HallarCaminoCostoMinimo(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino){
-		PositionList<Vertex<V>> caminoActual = new ListaDoblementeEnlazada2022<Vertex<V>>();
-		PositionList<Vertex<V>> caminoMinimo = new ListaDoblementeEnlazada2022<Vertex<V>>();
-		int costoActual = 0;
-		int costoMinimo = Integer.MAX_VALUE;
-		for(Vertex<V> v : g.vertices()) {
-			v.setEstado(false);
-			caminoMinimo.addLast(v);
-		}
-		try {
-			HallarCaminoCostoMinimoRec(g,origen,destino,caminoActual,caminoMinimo,costoActual,costoMinimo);
-		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
-		}
-		return caminoMinimo;
+
+	
+	/*
+	 * 		d)Agregue una operación a la clase Grafo<V,E> definida en (c) que dado un vértice v1 haga un recorrido DFS (
+			Depth First Search – Búsqueda en profundidad ) comenzando en el vértice v1 y retorne un mapeo cuyas claves
+			serán los rótulos de los vértices del grafo y el valor asociado será la cantidad de arcos adyacentes a cada vértice.
+			
+			En caso que el grafo tenga rótulos repetidos, debe almacenar en el mapeo únicamente aquel vértice que tenga
+			mayor cantidad de arcos adyacentes. Resolver el problema en Java, recuerde que esta agregando un método a la
+			clase Grafo, por lo tanto tiene total acceso a su estructura.
+	 */
+	
+	public Map<V,Integer> metodoD(Vertex<V> v1){
+		Map<V,Integer> mapeo = new MapeoConHashAbierto2022<V,Integer>();
+		for(Vertex<V> v : vertices) {v.setEstado(false);}
+		DFS(v1,mapeo);
+		return mapeo;
 	}
 	
-	private void HallarCaminoCostoMinimoRec(Graph<V,E> g,Vertex<V> origen,Vertex<V> destino,PositionList<Vertex<V>> cA,PositionList<Vertex<V>> cM,int cosA,int cosM) throws InvalidPositionException, EmptyListException {
-		origen.setEstado(true);
-		cA.addLast(origen);
-		if(origen.equals(destino)) {
-			if(cosA < cosM) {
-				cosM = cosA;
-				cA.clonar(cM);
-			}
-		}
-		else {
-			try {
-
-				for(Edge<E> a : g.incidentEdges(origen)) {
-					Vertex<V> x = g.opposite(origen,a);
-					if(x.getEstado()==false) {
-						HallarCaminoCostoMinimoRec(g,x,destino,cA,cM, cosA + a.getPeso(),cosM);}
-				}
-			} catch (InvalidVertexException | InvalidEdgeException e) {e.printStackTrace();
-			}
-		}
+	private void DFS(Vertex<V> v1,Map<V,Integer> m) {
+		v1.setEstado(true);
+		int cantAdy = 0;
 		try {
-			cA.remove(cA.last());
-			origen.setEstado(false);
-		} catch (InvalidPositionException | EmptyListException e) {e.printStackTrace();
-		}
-
+				
+			for(Edge<E> arc : incidentEdges(v1)) {
+				cantAdy++;
+				Vertex<V> x = opposite(v1,arc);
+				if(x.getEstado()==false)
+					DFS(x,m);
+			}
+			
+			if(m.get(v1.element())==null)
+				m.put(v1.element(), cantAdy);
+			else {
+				Integer aux = m.get(v1.element());
+				if(cantAdy>aux)
+					m.put(v1.element(), cantAdy);
+			}
+		
+		} catch (InvalidVertexException | InvalidEdgeException | InvalidKeyException e) {e.printStackTrace();}
 	}
+	
 
 }

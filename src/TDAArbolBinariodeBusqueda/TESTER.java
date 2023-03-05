@@ -1,5 +1,6 @@
 package TDAArbolBinariodeBusqueda;
 
+import Exceptions.EmptyListException;
 import TDALista.Position;
 import TDALista.PositionList;
 
@@ -39,10 +40,16 @@ public class TESTER {
 		p6.getRight().setParent(p6);
 		
 		
-		PositionList<NodoABB<Integer>> l = a.metodo2(40);
-		for(Position<NodoABB<Integer>> e : l.positions()) {
-			System.out.println("-> " + e.element().getRotulo());
+		Integer rr;
+		try {
+			rr = a.Ejercicio14(10);
+//			System.out.println(rr);
+		} catch (EmptyListException e) {e.printStackTrace();
 		}
+
+//		for(Position<NodoABB<Integer>> e : l.positions()) {
+//			System.out.println("-> " + e.element().getRotulo());
+//		}
 		
 	}
 

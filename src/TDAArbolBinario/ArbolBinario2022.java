@@ -456,4 +456,56 @@ public class ArbolBinario2022<E> implements BinaryTree<E> {
 //       return lista;
 //   }
 	
-}
+	
+	/*
+	 * Agregue un método a la clase definida anteriormente que dada una posición p retorne un número entero que indique el tamaño del subárbol 
+	 * con raíz p siempre y cuando el árbol receptor del mensaje sea propio. 
+	 * 
+	 * El tamaño del árbol se refiere a la cantidad de nodos del mismo. Implemente todos los métodos auxiliares utilizados. 
+	 * Recuerde que un árbol es propio si cada nodo del árbol o bien es una hoja o tiene exactamente dos hijos. 
+	 * En el caso en el que no se cumpla la precondición establecida por el enunciado, se debe lanzar una excepción InvalidPositionException.
+	 */
+	
+	public int tamanioArbol(Position<E> p) {
+		int t = 0;
+		try {
+			if (esPropio(root)) 
+				tamanio(p,t);
+			
+		} catch (InvalidPositionException | BoundaryViolationException e) {e.printStackTrace();
+		}
+		return t;
+	}
+	
+	private boolean esPropio(Position<E> p) throws InvalidPositionException, BoundaryViolationException {
+		BTNodo<E> n = checkPosition(p);
+		if(!(n.getHijoI()==null && n.getHijoD()==null) || !(n.getHijoI()!=null && n.getHijoD()!=null)) {
+			return false;
+		}
+		else {
+			if(n.getHijoI()!=null) 
+				esPropio(n.getHijoI());
+			
+			if(n.getHijoD()!=null) 
+				esPropio(n.getHijoD());
+		}
+		return true;
+
+	}
+	
+	private void tamanio(Position<E> p,int tamanio) throws InvalidPositionException, BoundaryViolationException {
+			BTNodo<E> n = checkPosition(p);
+			tamanio++;
+			if(n.getHijoI()!=null) 
+				tamanio(n.getHijoI(),tamanio);
+			
+			if(n.getHijoD()!=null) 
+				tamanio(n.getHijoD(),tamanio);
+	}
+
+	}
+	
+	
+
+	
+

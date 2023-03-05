@@ -215,13 +215,10 @@ public class Grafo_lista_adyacencia<V, E> implements Graph<V, E> {
 	}
 	private void BFS( Vertex<V> v)  {
 		try {
-			Queue<Vertex<V>> cola = (Queue<Vertex<V>>) new ColaConArregloCircular<Vertex<V>>();
+			Queue<Vertex<V>> cola = new ColaEnlazada<Vertex<V>>();
 			cola.enqueue(v);
 			while (!cola.isEmpty()) {
-				Vertex<V> w;
-			
-					w = cola.dequeue();
-				
+				Vertex<V> w = cola.dequeue();
 				System.out.println(w.element());
 				w.setEstado(true);
 				for (Edge<E> e : incidentEdges(w)) {
@@ -232,18 +229,6 @@ public class Grafo_lista_adyacencia<V, E> implements Graph<V, E> {
 					}
 				}
 			}
-		} catch (EmptyQueueException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidVertexException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidEdgeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
+		} catch (EmptyQueueException | InvalidVertexException | InvalidEdgeException e1) {e1.printStackTrace();}
 	}
-
 }

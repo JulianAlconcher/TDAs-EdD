@@ -49,8 +49,6 @@ public class Arbol2022<E> implements Tree<E>{
 	}
 	/**
 	 * Recorrido pre-orden del arbol
-	 * @param v
-	 * @param l
 	 */
 	private void recPreorden(TNodo<E> v, PositionList<Position<E>> l) {
 		l.addLast( v ); // La visita de v consiste de encolar v en l
@@ -59,14 +57,32 @@ public class Arbol2022<E> implements Tree<E>{
 	}
 	/**
 	 * Recorrido post-orden del arbol
-	 * @param v
-	 * @param l
 	 */
 	@SuppressWarnings("unused")
 	private void rePostorden(TNodo<E> v, PositionList<Position<E>> l) {
 		for( TNodo<E> h: v.getHijos()) 
 			rePostorden(h,l);
 		l.addLast(v);
+	}
+	
+	/**
+	 * Recorrido inOrder del arbol
+	 * @param n:nodo para recursion
+	 * @param l:lista donde se agregan los elementos
+	 * @throws EmptyListException
+	 */
+	@SuppressWarnings("unused")
+	private void inOrder(TNodo<E> n,PositionList<Position<E>> l) throws EmptyListException {
+		if(n.getHijos().isEmpty())
+			l.addLast(n);
+		else {
+			TDALista.Position<TNodo<E>> w = n.getHijos().first();
+			inOrder(w.element(),l);
+			l.addLast(n);
+			for(TNodo<E> h : n.getHijos()) {
+				inOrder(h,l);
+			}
+		}
 	}
 
 	@Override
@@ -354,9 +370,7 @@ public class Arbol2022<E> implements Tree<E>{
 		try {
 			nodo = checkPosition(p);
 			return (String) nodo.element();
-		} catch (InvalidPositionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (InvalidPositionException e) {e.printStackTrace();
 		}
 		return null;
 	}
@@ -367,9 +381,7 @@ public class Arbol2022<E> implements Tree<E>{
 			n = checkPosition(p);
 			return n.element().toString();
 
-		} catch (InvalidPositionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (InvalidPositionException e) {e.printStackTrace();
 		}
 		return null;
 	}

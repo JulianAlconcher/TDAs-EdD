@@ -2,6 +2,7 @@ package TDAArbolBinariodeBusqueda;
 
 import java.util.Comparator;
 
+import Exceptions.EmptyListException;
 import Exceptions.EmptyPriorityQueueException;
 import Exceptions.InvalidKeyException;
 import TDAColaConPrioridad.ColaCP_con_heap;
@@ -41,14 +42,16 @@ public class ArbolBinariodeBusqueda<E extends Comparable<E>> {
 	
 	private NodoABB<E> buscarAux( E x, NodoABB<E> p ) 
 	{
-		if( p.getRotulo() == null ) return p; // LleguÃ© a un dummy
+		if(p.getRotulo() == null) 
+			return p; // LleguÃ© a un dummy
 		else { // Estoy en un nodo con un dato no nulo
-		int c = comparador.compare( x, p.getRotulo() );
-		if( c == 0 ) return p; // Lo encontrÃ© porque x = p.getRotulo()
-		else if( c < 0 ) /* Busco a izq porque x < p.getRotulo() */
-		return buscarAux( x, p.getLeft() );
-		else /* Busco a derecha porque x > p.getRotulo() */
-		return buscarAux( x, p.getRight() );
+			int c = comparador.compare( x, p.getRotulo() );
+			if( c == 0 ) 
+				return p; // Lo encontrÃ© porque x = p.getRotulo()
+			else if( c < 0 ) /* Busco a izq porque x < p.getRotulo() */
+				return buscarAux( x, p.getLeft() );
+			else /* Busco a derecha porque x > p.getRotulo() */
+				return buscarAux( x, p.getRight() );
 		}
 		
 	}
@@ -237,37 +240,33 @@ public class ArbolBinariodeBusqueda<E extends Comparable<E>> {
 	public PositionList<NodoABB<E>> metodo(E x){
 		PositionList<NodoABB<E>> listaAsc = new ListaDoblementeEnlazada2022<NodoABB<E>>();
 		if(root.getRotulo().compareTo(x)>=0) { //raiz es mayor a x 
-			System.out.println("IZQUIERDA BABY");
 			InOrderEnABB(root.getLeft(),x,listaAsc);
 		}
-		else
-			InOrderEnABB(root.getRight(),x,listaAsc);
+		else {
+//			InOrderEnABB(root.getLeft(),x,listaAsc);
+			InOrderEnABB(root,x,listaAsc);
+		}
 		return listaAsc;
 	}
 	
 	private void  InOrderEnABB(NodoABB<E> n, E x , PositionList<NodoABB<E>> l){
-		System.out.println(n.getRotulo());
-	    if(n.getLeft() == null && n.getRight() == null) {
-	         if(n.getRotulo().compareTo(x)>=0){//n es menor x
-	        	System.out.println("METO EN LISTA");
-	            l.addLast(n);
-	           }
-	    }
-	    else{
-	    	NodoABB<E> w = null;
-	    	if(n.getLeft()!=null) {
-	    		w = n.getLeft();
-	        	InOrderEnABB(w,x,l);
-	    	}
-	    	if(n.getRotulo().compareTo(x)>=0){//n es menor x{
-	    		 System.out.println("METO EN LISTA");
-	    		 l.addLast(n);
-	    	}
-	        if(n.getRight()!=null){
-	           w = n.getRight();
-	           InOrderEnABB(w,x,l);
-	        }
-	    }
+    	NodoABB<E> w = null;
+    	if(n.getLeft()!=null) {
+    		w = n.getLeft();
+        	InOrderEnABB(w,x,l);
+    	}
+    	if(n.getRotulo().compareTo(x)>=0){						//n es menor x
+    		 l.addLast(n);
+    	}
+    	else {
+    		if(n.getLeft()!=null) {
+        		w = n.getLeft();
+            	InOrderEnABB(w,x,l);}
+    	}
+        if(n.getRight()!=null){
+           w = n.getRight();
+           InOrderEnABB(w,x,l);
+        }
 	}
 	
 	/**
@@ -307,5 +306,62 @@ public class ArbolBinariodeBusqueda<E extends Comparable<E>> {
 		
 	}
 	
+	/*
+	 * EJERCICIO 7 TP AB
+	 * 	Resuelva el siguiente problema: Dados dos ABB A y B se desea construir un tercer ABB C donde
+		los elementos de C son aquellos que se hallan en A y no en B. Asuma que la solución al
+		problema es un método de la clase ABB y que A recibe el mensaje. Estime el orden del tiempo
+		de ejecución de su solución justificando apropiadamente
+	 */
+	
+	public ArbolBinariodeBusqueda<E> construirABB(ArbolBinariodeBusqueda<E> b){
+		ArbolBinariodeBusqueda<E> c = new ArbolBinariodeBusqueda<E>();
+		preOrden(root,b,c);
+		return c;
+	}
+	
+	private void preOrden(NodoABB<E> n,ArbolBinariodeBusqueda<E> b,ArbolBinariodeBusqueda<E> c) {
+		if(b.buscar(n.getRotulo())==null) {
+			c.expandir(n, n.getRotulo());
+		}
+		if(n.getLeft()!=null)
+			preOrden(n.getLeft(),b,c);
+		if(n.getRight()!=null)
+			preOrden(n.getRight(),b,c);
+	}
+	
+	/**
+	 * 	Programe una operación llamada Ejercicio14 que forma parte de la clase árbol binario de
+		búsqueda (y por lo tanto tiene acceso a la estructura interna del mismo) que recibe un rótulo
+		de nodo y debe retornar el rótulo del predecesor inorder de dicho nodo. 
+		
+	 *	Programe todas las operaciones auxiliares de árbol binario de búsqueda que use. 
+	 *	Calcule el orden del tiempo de ejecución de su solución justificando apropiadamente.
+	 */	
+	public E Ejercicio14(E e) throws EmptyListException {
+		E ret = null;
+		if(e!=root.getRotulo())
+			inOrderLoco(root,e,ret);
+		return ret;
+	}
+	
+	private void inOrderLoco(NodoABB<E> n,E e,E ret) {
+		if(e != n.getRotulo()) {
+			NodoABB<E> w = null;
+			if(n.getLeft()!=null) {
+				w = n.getLeft();
+				inOrderLoco(w,e,ret);
+			}
+			if(n.getRight()!=null) {
+				w = n.getRight();
+				inOrderLoco(w,e,ret);
+			}
+		}
+		else {
+			System.out.println(n.getParent().getRotulo());
+			ret = n.getParent().getRotulo();
+		}
+		
+	}
 
 }
