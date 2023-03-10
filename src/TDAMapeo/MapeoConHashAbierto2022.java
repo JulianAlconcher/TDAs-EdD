@@ -23,6 +23,7 @@ public class MapeoConHashAbierto2022<K,V> implements Map<K,V> {
 		tamanioArreglo= 13;
 		cantEntradas = 0;
 		arreglo = (PositionList<Entrada<K,V>> []) new PositionList[tamanioArreglo];
+		
 		for(int i=0; i<tamanioArreglo; i++) {
 			arreglo[i] = new ListaDoblementeEnlazada2022<Entrada<K,V>>();
 		}
@@ -201,4 +202,5 @@ public class MapeoConHashAbierto2022<K,V> implements Map<K,V> {
             }
         }
     }
+    
 }

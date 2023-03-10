@@ -74,10 +74,11 @@ public class GrafoD_lista_adyacencia<V,E> implements GraphD<V,E> {
 	}
 
 	public boolean areAdjacent(Vertex<V> v, Vertex<V> w) throws InvalidVertexException {
-		if (v == null || w == null)
+		if (v == null || w == null) 
 			throw new InvalidVertexException("Vertice invalido");
 		boolean salida = false;
 		ArcoD<V, E> a;
+		@SuppressWarnings("unchecked")
 		VerticeD<V,E> vv = (VerticeD<V,E>)v;
 		Iterator<ArcoD<V,E>> itArcos = vv.getEmergentes().iterator();
 		while (itArcos.hasNext() && !salida) {
